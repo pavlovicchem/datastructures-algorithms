@@ -26,10 +26,39 @@ class ListNode
   }
 }
 
-class LinkedList
+class LinkedList implements Iterator
 {
+  // Core properties
   protected $_firstNode = NULL;
   protected $_totalNodes = 0;
+  // Iterator interface properties
+  private $_currentNode = NULL;
+  private $_currentPosition = 0;
+
+  /*
+    Iterator Interface methods
+  */
+  public function current() {
+    return $this->_currentNode->data;
+  }
+  public function next() {
+    $this->_currentPosition++;
+    $this->_currentNode = $this->_currentNode->next;
+  }
+  public function key() {
+    return $this->_currentPosition;
+  }
+  public function rewind() {
+    $this->_currentPosition = 0;
+    $this->_currentNode = $this->_firstNode;
+  }
+  public function valid() {
+    return $this->_currentNode !== NULL;
+  }
+
+  /*
+    Implemented LinkedList Operations - Methods
+  */
   // O(1) time complexity
   public function insertFirst(string $data): bool
   {
@@ -228,7 +257,10 @@ echo "List has ".$phpBooksList->listSize()." books \n";
 $phpBooksList->display();
 $phpBooksList->reverse();
 echo "List has ".$phpBooksList->listSize()." books \n";
-$phpBooksList->display();
+echo "Testing iterator implementation\n";
+foreach($phpBooksList as $book){
+  echo $book."\n";
+};
 if($phpBooksList->search("Pro PHP 7")){
   echo "Item found!\n";
 }else{
