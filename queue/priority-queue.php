@@ -29,12 +29,10 @@ class TaskQueue implements PriorityQueue
   protected $_totalNodes = 0;
   //Queue implementation properties
   private $limit;
-  private $queue;
 
   public function __construct(int $limit = 20)
   {
     $this->limit = $limit;
-    $this->queue = [];
   }
   /*
     Core linkedlist required methods
